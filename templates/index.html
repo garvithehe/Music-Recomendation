@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Music Recommendation{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="recommendation-container">
+        <h1 class="title">Song Recommendation System</h1>
+        
+        <form method="POST" class="song-form">
+            <div class="form-group">
+                <label for="song_name">Enter a song name:</label>
+                <input type="text" class="form-control" id="song_name" name="song_name" placeholder="Enter a song name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Recommendations</button>
+        </form>
+        
+        {% if recommendations %}
+            <div class="recommendation-results">
+                <h3 class="recommendation-title">Recommended Songs:</h3>
+                <ul class="list-group">
+                    {% for track in recommendations %}
+                        <li class="list-group-item">
+                            <strong>{{ track.name }}</strong> by {{ track.artist }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% elif recommendations is not none %}
+            <p class="no-recommendations">No recommendations found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
